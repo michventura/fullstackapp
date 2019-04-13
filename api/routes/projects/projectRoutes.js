@@ -1,28 +1,28 @@
 const express = require('express')
 const router = express.Router()
 
-const userService = require('./userService')
+const projectService = require('./projectService')
 
-// GET /users/
+// GET /project/
 router
   .route('/')
   .get(async (req, res, next) => {
     try {
-      const users = await userService.listUsers()
+      const projects = await projectService.listProjects()
       res.json({
-        data: users,
+        data: projects,
       })
     } catch (e) {
       next(e)
     }
   })
-  // POST /users/ (create new user)
+  // POST /project/ (create new project)
   .post(async (req, res, next) => {
     const {body} = req
     try {
-      const user = await userService.createUser(body)
+      const project = await projectService.createProject(body)
       res.status(201).json({
-        data: [user],
+        data: [project],
       })
     } catch (e) {
       next(e)
