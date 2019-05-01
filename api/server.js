@@ -8,12 +8,13 @@ const {applyMiddleware} = require('./utils')
 const middleWare = require('./middleware')
 const errorHandlers = require('./middleware/errorHandlers')
 
+const {router: projectRoutes} = require('./routes/projects/projectRoutes')
 const {router: userRoutes} = require('./routes/users/userRoutes')
-
 const {PORT, URL} = require('./utils/constants')
 
 applyMiddleware(middleWare, router)
 
+router.use('/api/projects', projectRoutes)
 router.use('/api/users', userRoutes)
 
 applyMiddleware(errorHandlers, router)
@@ -29,6 +30,7 @@ mongoose.connect(URL, {useNewUrlParser: true}).then(async () => {
     server.listen(PORT, () => {
       console.log(`Server is running on PORT:${PORT}`)
       if (process.send) {
+        // NOTE: process is being run by pm2
         process.send('ready')
       }
     })

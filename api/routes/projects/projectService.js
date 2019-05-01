@@ -1,14 +1,29 @@
-const {model: Project} = require('./projectModel')
+const project = require('./projectModel')
 
-exports.listProjects = async () => {
-  return await Project.find({})
+const listProjects = () => {
+  return project.find({}).exec()
 }
 
-exports.createProject = async projectData => {
-  try {
-    const project = new Project(projectData)
-    return await project.save()
-  } catch (e) {
-    throw e
-  }
+const getProject = projectId => {
+  return project.findById(projectId).exec()
+}
+
+const createProject = projectData => {
+  return project.create(projectData).exec()
+}
+
+const updateProject = (projectId, update) => {
+  return project.findByIdAndUpdate(projectId, update, {new: true}).exec()
+}
+
+const removeProject = projectId => {
+  return project.findByIdAndDelete(projectId).exec()
+}
+
+module.exports = {
+  listProjects,
+  getProject,
+  createProject,
+  updateProject,
+  removeProject,
 }
