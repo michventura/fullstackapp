@@ -1,7 +1,7 @@
 const fastRedact = require('fast-redact')
 
 const redact = fastRedact({
-  paths: ['pswd'],
+  paths: ['password'],
 })
 
 exports.applyMiddleware = (middlewareWrapper, router) => {
