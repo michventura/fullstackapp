@@ -27,7 +27,7 @@ const projectSchema = new Schema({
       },
       createdAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
       },
       completed: {
         type: Boolean,
