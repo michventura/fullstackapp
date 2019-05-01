@@ -43,14 +43,14 @@
     "members": ["58c039018060197ca0b52d4c", "58c03ada8060197ca0b52d52"],
     "tasks": [
       {
-        "taskName": "Explain how the application will impact the market and the ROI for VC",
-        "taskDescription": "",
+        "taskName": "Application market impact and ROI for VC lecture",
+        "taskDescription": "Explanation of the impact the application will have on the market and ROI",
         "createdAt": "1556724194623",
         "completed": "false"
       },
       {
-        "taskName": "Explain the technological features of the application",
-        "taskDescription": "",
+        "taskName": "Application technological features lecture",
+        "taskDescription": "Explanation of the technological features the application will have",
         "createdAt": "1556724194623",
         "completed": "false"
       }

@@ -1,79 +1,37 @@
-const Project = require('../routes/projects/projectModel')
-const Task = require('../routes/tasks/taskModel')
 const User = require('../routes/users/userModel')
-const Collaborator = require('../routes/collaborators/collaboratorModel')
+const Project = require('../routes/projects/projectModel')
 
 exports.truncate = async () => {
-  await Project.deleteMany()
-  await Task.deleteMany()
   await User.deleteMany()
-  await Collaborator.deleteMany()
+  await Project.deleteMany()
 }
 
 exports.seed = async () => {
   try {
-    const taskData = [
-      {
-        taskTitle: 'Deploy application to test functionality and performance',
-        taskDescription:
-          'The deployment workflow must include all the requirements to be able to test the application UI',
-        taskMembers: ['manager', 'developer', 'designer', 'copywriter'],
-        createdAt: Date.now(),
-        completed: false,
-      },
-    ]
-    const taskPromises = taskData.map(async data => {
-      try {
-        const task = new Task(data)
-        return await task.save()
-      } catch (e) {
-        throw e
-      }
-    })
-    const tasks = await Promise.all(taskPromises)
-    const collaborators = await Promise.all(collaboratorPromises)
-
-    const projectData = [
-      {
-        title: 'FullStack Project',
-        author: 'Mich',
-        tasks,
-        collaborators,
-      },
-    ]
-    const projectPromises = projectData.map(async data => {
-      try {
-        const project = new Project(data)
-        return await project.save()
-      } catch (e) {
-        throw e
-      }
-    })
-    const projects = await Promise.all(projectPromises)
-
-    const collaboratorData = [
-      {
-        firstName: 'Pablo',
-        lastName: 'Ventura',
-        avatar: '',
-        role: 'manager',
-        projects,
-      },
-    ]
-    const collaboratorPromises = collaboratorData.map(async data => {
-      try {
-        const collaborator = new Collaborator(data)
-        return await collaborator.save()
-      } catch (e) {
-        throw e
-      }
-    })
-    await Promise.all(collaboratorPromises)
-
     const userData = [
       {
-        email: 'email@email.com',
+        name: 'laura',
+        email: 'reyna.lau@gmail.com',
         password: 'password',
+        userRole: 'manager',
+      },
+      {
+        name: 'mich',
+        email: 'michcodes@hotmail.com',
+        password: 'password',
+        userRole: 'developer',
+      },
+      {
+        name: 'gabriel',
+        email: 'wolve_21@yahoo.com',
+        password: 'password',
+        userRole: 'designer',
+      },
+      {
+        name: 'renata',
+        email: 'showbo@hotmail.com',
+        password: 'password',
+        userRole: 'copywriter',
       },
     ]
     const userPromises = userData.map(async data => {
@@ -84,9 +42,79 @@ exports.seed = async () => {
         throw e
       }
     })
-    await Promise.all(userPromises)
+    const users = await Promise.all(userPromises)
 
-    console.log('Seeding completed.')
+    const projectData = [
+      {
+        title: 'Design the presentation for fundraising',
+        members: [users],
+        tasks: [
+          {
+            taskName: 'Presentation copywriting',
+            taskDescription:
+              'Make sure the copywriting for the presentation is ready to convert skepticals into raving fans',
+            createdAt: Date.now(),
+            completed: false,
+          },
+          {
+            taskName: 'Presentation design',
+            taskDescription:
+              'Have the desing fully flesh out to have it real pretty',
+            createdAt: Date.now(),
+            completed: false,
+          },
+        ],
+      },
+      {
+        title: 'Develop and deploy the MVP Application',
+        members: [users],
+        tasks: [
+          {
+            taskName: "Application's backend design and development",
+            taskDescription: 'Create the API and DBL for the backend',
+            createdAt: Date.now(),
+            completed: false,
+          },
+          {
+            taskName: "Application's frontend design and development",
+            taskDescription:
+              'Create the design assets and frontend of the application',
+            createdAt: Date.now(),
+            completed: false,
+          },
+        ],
+      },
+      {
+        title: 'Showcase the presentation and application demo to VC',
+        members: [users],
+        tasks: [
+          {
+            taskName: 'Application market impact and ROI for VC lecture',
+            taskDescription:
+              'Explanation of the impact the application will have on the market and ROI',
+            createdAt: Date.now(),
+            completed: false,
+          },
+          {
+            taskName: 'Application technological features lecture',
+            taskDescription:
+              'Explanation of the technological features the application will have',
+            createdAt: Date.now(),
+            completed: false,
+          },
+        ],
+      },
+    ]
+    const projectPromises = projectData.map(async data => {
+      try {
+        const project = new Project(data)
+        return await project.save()
+      } catch (e) {
+        throw e
+      }
+    })
+
+    await Promise.all(projectPromises)
   } catch (e) {
     console.error('Seeding failed...')
     throw e // This `throw` will be caught in the server.js file
